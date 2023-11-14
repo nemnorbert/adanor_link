@@ -1,0 +1,93 @@
+{   
+    "languages": {
+        "site": ["en", "hu", "de", "es", "ru", "zh", "ar", "pt", "ja", "ko", "fr", "it", "tr", "pl", "ro", "sk", "sl", "hr", "cz"],
+        "hu": {
+            "redirect": "Biztonságos átirányítás folyamatban",
+            "missing": "Nem található ilyen oldal"
+        },
+        "en": {
+            "redirect": "Safe redirection in progress",
+            "missing": "Page not found"
+        },
+        "de": {
+            "redirect": "Sichere Weiterleitung im Gange",
+            "missing": "Seite nicht gefunden"
+        },
+        "es": {
+            "redirect": "Redirección segura en progreso",
+            "missing": "Página no encontrada"
+        },
+        "ru": {
+            "redirect": "Безопасное перенаправление в процессе",
+            "missing": "Страница не найдена"
+        },
+        "zh": {
+            "redirect": "正在进行安全重定向",
+            "missing": "页面未找到"
+        },
+        "ar": {
+            "redirect": "إعادة التوجيه الآمن قيد التقدم",
+            "missing": "الصفحة غير موجودة"
+        },
+        "pt": {
+            "redirect": "Redirecionamento seguro em andamento",
+            "missing": "Página não encontrada"
+        },
+        "ja": {
+            "redirect": "安全なリダイレクトが進行中",
+            "missing": "ページが見つかりません"
+        },
+        "ko": {
+            "redirect": "안전한 리디렉션 진행 중",
+            "missing": "페이지를 찾을 수 없습니다"
+        },
+        "fr": {
+            "redirect": "Redirection sécurisée en cours",
+            "missing": "Page non trouvée"
+        },
+        "it": {
+            "redirect": "Reindirizzamento sicuro in corso",
+            "missing": "Pagina non trovata"
+        },
+        "tr": {
+            "redirect": "Güvenli yönlendirme devam ediyor",
+            "missing": "Sayfa bulunamadı"
+        },
+        "pl": {
+            "redirect": "Bezpieczne przekierowanie w toku",
+            "missing": "Nie znaleziono strony"
+        },
+        "ro": {
+            "redirect": "Redirecționare în siguranță în curs",
+            "missing": "Pagină negăsită"
+        },
+        "sk": {
+            "redirect": "Bezpečné presmerovanie prebieha",
+            "missing": "Stránka nenájdená"
+        },
+        "sl": {
+            "redirect": "V teku je varno preusmerjanje",
+            "missing": "Stran ni najdena"
+        },
+        "hr": {
+            "redirect": "Sigurno preusmjeravanje u tijeku",
+            "missing": "Stranica nije pronađena"
+        },
+        "cz": {
+            "redirect": "Bezpečné přesměrování probíhá",
+            "missing": "Stránka nenalezena"
+        }
+    },
+    "mainPath": {
+        "test": "/redcat_link/",
+        "web": "/"
+    },
+    "redcatPath": {
+        "test": "/redcat/",
+        "web": "https://center.red-cat.hu/"
+    },
+    "creator": "https://red-cat.hu",
+    "version": {
+        "bootstrap": "1.10.5"
+    }
+}

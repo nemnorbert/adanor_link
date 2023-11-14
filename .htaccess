@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Átirányítás, ha csak a link.red-cat.hu domain érkezik
+RewriteCond %{HTTP_HOST} ^link\.red-cat\.hu$ [NC]
+RewriteRule ^$ https://red-cat.hu [L,R=301]
+
+# A jelenlegi szabályok a nem létező fájlokhoz és könyvtárakhoz
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php
