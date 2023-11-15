@@ -1,16 +1,16 @@
 console.log("REDCAT LINK beta - Powered By REDCAT");
+const waitTime = 3000;
 
-async function redirectSite() {
-    while (true) {
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        window.location.href = redirectURL;
-        console.log("Refresh page");
-    }
-}
+const redirectSite = () => {
+    console.log(`Redirect to ${redirectURL}`);
+    window.location.href = redirectURL;
+};
 
-if (redirectURL != "") {
-    //redirectSite();
-    console.log("Újratöltés")
-} else {
-    console.log("Error 404")
+if ((redirectURL !== "") && (redirectStatus === "redirect")) {
+    setTimeout(() => {
+        redirectSite();
+        setInterval(() => {
+            redirectSite();
+        }, waitTime);
+    }, waitTime);
 }

@@ -1,0 +1,14 @@
+{
+    "title": {
+        "redirect": "Safe redirection:",
+        "not_found": "Page not found",
+        "blocked": "Blocked",
+        "connect_error": "Connection Error",
+        "sql_error": "Database Error",
+        "general_error": "General Error"
+    },
+    "text": {
+        "connect_error": "Failed to connect to the database",
+        "blocked": "User redirection blocked"
+    }
+}

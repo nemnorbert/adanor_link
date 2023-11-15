@@ -1,5 +1,5 @@
 <?php
-if (isset($siteINFO -> rapid) && $siteINFO -> rapid) {
+if (isset($siteINFO -> rapid) && $siteINFO -> rapid && ($siteINFO -> status === "redirect")) {
     header("HTTP/1.1 301 Moved Permanently");
     header('Location: ' . $siteINFO->outURL);
     exit();
@@ -16,9 +16,7 @@ if (isset($siteINFO -> rapid) && $siteINFO -> rapid) {
 </head>
 <body class="<?php
         if (isset($siteINFO -> status) && $siteINFO -> status === "redirect") {
-            echo 'bgRedirect';
-        } else {
-            echo 'bgError';
+            echo 'bgRedirect'; } else { echo 'bgError';
         }
     ?>">
 
@@ -39,8 +37,8 @@ if (isset($siteINFO -> rapid) && $siteINFO -> rapid) {
     
 </body>
 <script>
-    let redirectURL = "<?php if (isset($siteINFO -> outURL)) {echo $siteINFO -> outURL;}?>";
-    console.log(redirectURL);
+    const redirectURL = "<?php if (isset($siteINFO -> outURL)) {echo $siteINFO -> outURL;}?>";
+    const redirectStatus = "<?= $siteINFO->status ?>";
 </script>
 <script src="<?= $siteINFO->mainPath ?>js/main.js?v=<?= time() ?>"></script>
 </html>

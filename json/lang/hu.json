@@ -1,15 +1,14 @@
 {
     "title": {
         "redirect": "Biztonságos átirányítás:",
-
         "not_found": "Nem található ilyen oldal",
-        "deleted": "Az oldalt törölték",
-        "blocked": "Oldal letiltva",
+        "blocked": "Letiltva",
         "connect_error": "Kapcsolódási Hiba",
         "sql_error": "Adatbázis hiba",
         "general_error": "Általános hiba"
     },
     "text": {
-        "connect_error": "Nem sikerült kapcsolódni az adatbázishoz"
+        "connect_error": "Nem sikerült kapcsolódni az adatbázishoz",
+        "blocked": "A felhasználó átirányítása letiltva"
     }
 }

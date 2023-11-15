@@ -47,9 +47,10 @@ function manageDatabase($siteINFO) {
     $db = connectDB($siteINFO);
     
     if ($siteINFO->status !== "connect_error") {
-        $sql = 'SELECT l.url, s.url, l.redirect, l.rapid, l.service_id
+        $sql = 'SELECT l.url, s.url, l.redirect, l.rapid, l.service_id, u.blocked, u.premium
                 FROM `links` as l
                 LEFT JOIN services as s ON l.service_id = s.id
+                LEFT JOIN users as u ON l.user_id = u.user_id
                 WHERE l.url = ? LIMIT 1;';
 
         try {
@@ -67,8 +68,13 @@ function manageDatabase($siteINFO) {
                 if ($result->num_rows > 0) {
                     $row = $result->fetch_assoc();
                     $siteINFO->outURL = $row["url"] . $row["redirect"];
-                    $siteINFO->rapid = ($row["rapid"] === 1) || ($row["service_id"] > 1);
+                    $siteINFO->rapid = ($row["rapid"] === 1) || ($row["service_id"] > 1) || $row["premium"];
                     $siteINFO->status = isset($row["redirect"]) ? "redirect" : "general_error";
+
+                    if ($row["blocked"]) {
+                        $siteINFO->status = "blocked";
+                        $siteINFO->outURL = "";
+                    }
                 } else {
                     errorHandler("not_found", $siteINFO->requestURI);
                 }
