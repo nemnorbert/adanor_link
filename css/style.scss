@@ -2,7 +2,8 @@
 $minW: 200px;
 $colorPrimary: rgb(70, 206, 42);
 $colorSecundary: rgb(50, 156, 23);
-$loadingBGColors: #272727, #195679, #00245a, #1d1d1d;
+$loadingBGColors: #272727, #2273a1, #00245a, #1d1d1d;
+$colorRed: rgb(202, 0, 0);
 
 * {
     box-sizing: border-box;
@@ -13,17 +14,20 @@ html {
     min-width: $minW;
 }
 body {
-    min-width: $minW;
     min-height: 100vh;
     font-family: sans-serif;
     background-size: 400% 400%;
     animation: preLoaderBG 15s ease-in-out infinite;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .bgRedirect {
   background-image: linear-gradient(-45deg, $loadingBGColors);
 }
 .bgError {
-  background-image: linear-gradient(-45deg, #e54a00, #ad0202, #a51f1f, #ff5454);
+  background-image: linear-gradient(-45deg, #000000, #ad3202, #a51f1f, #ff7575);
 }
 
 
@@ -45,13 +49,8 @@ a:hover {
     opacity: .5;
 }
 .box {
-    position: absolute;
-    left: 50%;
-    top: 50%;
     width: clamp(100px, 80%, 400px);
-    transform: translate(-50%, -50%);
     border-radius: 30px;
-    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -68,9 +67,8 @@ a:hover {
     }
     .link {
         text-transform: uppercase;
-        font-size: 35px;
+        font-size: 1.7em;
         font-weight: bold;
-        line-height: 35px;
     }
 }
 .status {
@@ -78,16 +76,37 @@ a:hover {
     text-align: center;
     background-image: linear-gradient(160deg, $colorPrimary, $colorSecundary);
     border-radius: 1em;
-    padding: 12px;
+    padding: 1em;
     font-weight: bold;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    fill: white;
+    overflow-wrap: anywhere;
+
+    display: flex;
+    flex-direction: column;
+    gap: .7em;
+    
+    svg {
+      height: 4em;
+      animation: svgAni 3s ease-in-out infinite;
+    }
+    @keyframes svgAni {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(.8);
+      }
+    }
 
     .title {
       font-weight: bold;
       text-transform: uppercase;
+      font-size: 1.2em;
     }
 }
 .error {
     background-image: linear-gradient(160deg, rgb(238, 238, 238), rgb(206, 206, 206));
-    color: red;
+    color: $colorRed;
+    fill: $colorRed;
 }
