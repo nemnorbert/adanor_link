@@ -34,16 +34,34 @@ function connectDB($siteINFO) {
     }
 }
 
-function manageDatabase($siteINFO, $sql) {
+function manageDatabase($siteINFO) {
     $db = connectDB($siteINFO);
-    
+    $sql = 'SELECT l.url, s.url, l.redirect, l.rapid
+    FROM `links` as l
+    LEFT JOIN services as s ON l.service_id = s.id
+    WHERE l.url = "'.$siteINFO->page.'" LIMIT 1;';
+
     if ($db->connect_error) {
+        errorHandler("DB Connection", $db->connect_error);
         die("Sikertelen kapcsolódás: " . $db->connect_error);
     }
 
-    if ($db->query($sql) === TRUE) {
-        //echo "Siker!!!";
+    $result = $db->query($sql);
+
+    if ($result) {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $siteINFO->outURL = $row["url"] . $row["redirect"];
+            $siteINFO->rapid = $row["rapid"];
+            $siteINFO->status = isset($row["redirect"]) ? "redirect" : "error_general";
+        } else {
+            $siteINFO->status = "not_found";
+            errorHandler("Page Not found", $siteINFO->requestURI);
+        }
+
+        $result->free();
     } else {
+        errorHandler("DB No result", $db->error);
         echo "Error: " . $db->error;
     }
 
@@ -51,38 +69,31 @@ function manageDatabase($siteINFO, $sql) {
 }
 
 ///////////////////////////// HTML /////////////////////////////
-function buildTitle() {
-    global $siteJSON, $siteLang, $linkDB, $siteInfo;
+function buildBox() {
+    global $siteINFO, $langJSON;
+    $status = isset($siteINFO->status) && $siteINFO->status === "redirect";
 
-    if (isset($linkDB["redirect"])) {
-        $text = '<div class="status">';
-        $text .= '<div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
-        $text .= '<div>'.$siteJSON["languages"][$siteLang]["redirect"].'</div>';
-        $text .= '<div><i class="bi bi-arrow-down"></i></div>';
-        $text .= '<div class="url"><a target="_blank" href="'.$siteInfo->redirectURL.'">'.$siteInfo->redirectURL.'</a></div>';
-        $text .= '</div>';
-    } else {
-        $text = '<div class="status error">';
-        $text .= '<b><i class="bi bi-shield-exclamation"></i><br>'.$siteJSON["languages"][$siteLang]["missing"].'</b><br></div>';
-    }
+    $title = $langJSON["title"][$siteINFO->status];
+    $text = $status ? $siteINFO->outURL : (isset($langJSON["text"][$siteINFO->status]) ? $langJSON["text"][$siteINFO->status] : "");
 
-    echo $text;
+    $html = '<div class="status ';
+    $html .= $status ? 'ready">' : 'error">';
+        $html .= '<div class="title">'.$title.'</div>';
+        $html .= '<div class="text">'.$text.'</div>';
+    $html .= '</div>';
+    echo $html;
 }
-
 ///////////////////////////// ERROR HANDLER /////////////////////////////
-function errorHandler($type, $message) {
-    /*
-    $subject = "Hiba történt: REDCAT Link";
-    $message = "Hiba típusa: $errorType\n Hiba üzenet: $errorMessage";
-    $to = "redcat.hungary+error@gmail.com";
+function errorHandler($type, $text) {
+    global $siteINFO;
 
-    // Send email
-    mail($to, $subject, $message);
+    $path = "log";
+    $time = date('Y-m-d H:i:s');
+    $message = "$time - [$type] $text" . PHP_EOL;
+    $logFile = "log/".$path."_".date('y')."-".date('m').".txt";
+    error_log($message, 3, $logFile);
 
-    // If critical error
-    if ($errorType === 'critical') {
-        echo "A critical error has occurred. Please contact the administrator.";
-    }
-    */
+    $siteINFO -> errTitle = $type;
+    $siteINFO -> errText = $text;
 }
 ?>

@@ -9,7 +9,8 @@ async function redirectSite() {
 }
 
 if (redirectURL != "") {
-    redirectSite();
+    //redirectSite();
+    console.log("Újratöltés")
 } else {
     console.log("Error 404")
 }
