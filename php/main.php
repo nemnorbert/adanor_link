@@ -1,5 +1,5 @@
 <?php
-if (isset($siteINFO -> rapid) && $siteINFO -> rapid === 1) {
+if (isset($siteINFO -> rapid) && $siteINFO -> rapid) {
     header("HTTP/1.1 301 Moved Permanently");
     header('Location: ' . $siteINFO->outURL);
     exit();

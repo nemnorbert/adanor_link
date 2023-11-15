@@ -4,9 +4,12 @@
 
         "not_found": "Nem található ilyen oldal",
         "deleted": "Az oldalt törölték",
-        "blocked": "Oldal letiltva"
+        "blocked": "Oldal letiltva",
+        "connect_error": "Kapcsolódási Hiba",
+        "sql_error": "Adatbázis hiba",
+        "general_error": "Általános hiba"
     },
     "text": {
-        "test": "..."
+        "connect_error": "Nem sikerült kapcsolódni az adatbázishoz"
     }
 }
