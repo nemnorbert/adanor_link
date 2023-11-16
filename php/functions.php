@@ -45,9 +45,9 @@ function connectDB($siteINFO) {
 
 function manageDatabase($siteINFO) {
     $db = connectDB($siteINFO);
-    
+
     if ($siteINFO->status !== "connect_error") {
-        $sql = 'SELECT l.url, s.url, l.redirect, l.rapid, l.service_id, u.blocked, u.premium
+        $sql = 'SELECT s.url, l.redirect, l.rapid, l.service_id, u.blocked, u.premium
                 FROM `links` as l
                 LEFT JOIN services as s ON l.service_id = s.id
                 LEFT JOIN users as u ON l.user_id = u.user_id
@@ -62,28 +62,22 @@ function manageDatabase($siteINFO) {
 
             $stmt->bind_param("s", $siteINFO->page);
             $stmt->execute();
-            $result = $stmt->get_result();
+            $stmt->bind_result($url, $redirect, $rapid, $serviceId, $blocked, $premium);
 
-            if ($result) {
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $siteINFO->outURL = $row["url"] . $row["redirect"];
-                    $siteINFO->rapid = ($row["rapid"] === 1) || ($row["service_id"] > 1) || $row["premium"];
-                    $siteINFO->status = isset($row["redirect"]) ? "redirect" : "general_error";
+            if ($stmt->fetch()) {
+                $siteINFO->outURL = $url . $redirect;
+                $siteINFO->rapid = ($rapid === 1) || ($serviceId > 1) || $premium;
+                $siteINFO->status = isset($redirect) ? "redirect" : "general_error";
 
-                    if ($row["blocked"]) {
-                        $siteINFO->status = "blocked";
-                        $siteINFO->outURL = "";
-                    }
-                } else {
-                    errorHandler("not_found", $siteINFO->requestURI);
+                if ($blocked) {
+                    $siteINFO->status = "blocked";
+                    $siteINFO->outURL = "";
                 }
-
-                $result->free();
+            } else {
+                errorHandler("not_found", $siteINFO->requestURI);
             }
 
             $stmt->close();
-
         } catch (Exception $e) {
             errorHandler("sql_error", $e->getMessage());
         }
