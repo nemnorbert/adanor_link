@@ -1,7 +1,7 @@
 <?php
-if (isset($siteINFO -> rapid) && $siteINFO -> rapid && ($siteINFO -> status === "redirect")) {
+if (isset($apiData["rapid"]) && $apiData["rapid"] && false) {
     header("HTTP/1.1 301 Moved Permanently");
-    header('Location: ' . $siteINFO->outURL);
+    header('Location: ' . $apiData["redirect_to"]);
     exit();
 }
 ?>
@@ -15,7 +15,7 @@ if (isset($siteINFO -> rapid) && $siteINFO -> rapid && ($siteINFO -> status === 
     <link rel="stylesheet" href="css/style.css?v=<?= time() ?>">
 </head>
 <body class="<?php
-        if (isset($siteINFO -> status) && $siteINFO -> status === "redirect") {
+        if (isset($apiData["status"]) && $apiData["status"] === "ready") {
             echo 'bgRedirect'; } else { echo 'bgError';
         }
     ?>">
@@ -29,7 +29,7 @@ if (isset($siteINFO -> rapid) && $siteINFO -> rapid && ($siteINFO -> status === 
             </div>
         </a>
     </div>
-    <?php buildBox(); ?>
+    <?php buildBox($apiData, $langJSON); ?>
     <div>
         <a target="_blank" href="<?= $siteJSON["creator"] ?>">Powered by<br><b>REDCAT</b></a>
     </div>

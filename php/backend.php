@@ -18,6 +18,9 @@ if ($_SERVER['SERVER_NAME'] === 'localhost') {
     $siteINFO -> mainPath = $siteJSON["mainPath"]["test"];
     $siteINFO -> redcatPath = $siteJSON["redcatPath"]["test"];
 } else {
+    error_reporting(0);
+    ini_set('display_errors', '0');
+
     $preURL = '';
     $siteINFO -> test = false;
     $siteINFO -> mainPath = $siteJSON["mainPath"]["web"];
@@ -35,5 +38,13 @@ $siteINFO -> langSite = in_array($siteINFO -> langUser, $siteINFO -> langAvailab
 $langJSON = loadJSON('json/lang/'.$siteINFO -> langSite.'.json');
 
 // Ready To Action
-manageDatabase($siteINFO);
+$apiData = [];
+
+try {
+    $pre = $siteINFO->test ? "http://localhost/redcat/api/" : "https://center.red-cat.hu/api/";
+    $apiData = loadJSON($pre."redcatLink?url=" . $siteINFO->page);
+} catch (\Throwable $th) {
+    $apiData["status"] = "error";
+    $apiData["error"] = "error_api";
+}
 ?>

@@ -1,14 +1,10 @@
 {
-    "title": {
-        "redirect": "Biztonságos átirányítás:",
-        "not_found": "Nem található ilyen oldal",
-        "blocked": "Letiltva",
-        "connect_error": "Kapcsolódási Hiba",
-        "sql_error": "Adatbázis hiba",
-        "general_error": "Általános hiba"
-    },
-    "text": {
-        "connect_error": "Nem sikerült kapcsolódni az adatbázishoz",
-        "blocked": "A felhasználó átirányítása letiltva"
-    }
+    "ready": "Biztonságos átirányítás",
+    "blocked": "Átirányítás letiltva!",
+
+    "error_api": "Kapcsolódási hiba (API)",
+    "error_404": "Nem található ilyen oldal",
+    "error_param": "Paraméter hiba",
+    "error_database": "Adatbázis hiba",
+    "error_general": "Általános hiba"
 }
