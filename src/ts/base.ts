@@ -1,2 +1,2 @@
-let redirectURL:string;
-let redirectStatus:string;
+let redirect_url:string;
+let redirect_status:string;

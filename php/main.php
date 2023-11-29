@@ -1,5 +1,5 @@
 <?php
-if (isset($apiData["rapid"]) && $apiData["rapid"] && false) {
+if (isset($apiData["rapid"]) && $apiData["rapid"]) {
     header("HTTP/1.1 301 Moved Permanently");
     header('Location: ' . $apiData["redirect_to"]);
     exit();
@@ -14,11 +14,8 @@ if (isset($apiData["rapid"]) && $apiData["rapid"] && false) {
     <title>REDCAT Link</title>
     <link rel="stylesheet" href="css/style.css?v=<?= time() ?>">
 </head>
-<body class="<?php
-        if (isset($apiData["status"]) && $apiData["status"] === "ready") {
-            echo 'bgRedirect'; } else { echo 'bgError';
-        }
-    ?>">
+<body
+<?php if ($apiData["status"] !== "ready") {echo ' class="errors"';}?>>
 
 <div class="box">
     <div class="logo">
@@ -37,8 +34,10 @@ if (isset($apiData["rapid"]) && $apiData["rapid"] && false) {
     
 </body>
 <script>
-    const redirectURL = "<?php if (isset($siteINFO -> outURL)) {echo $siteINFO -> outURL;}?>";
-    const redirectStatus = "<?= $siteINFO->status ?>";
+    const redirect_url = "<?php if (isset($apiData["redirect_to"])) {
+        echo $apiData["redirect_to"];
+    } ;?>";
+    const redirect_status = "<?= $apiData["status"] ?>";
 </script>
 <script src="<?= $siteINFO->mainPath ?>js/main.js?v=<?= time() ?>"></script>
 </html>

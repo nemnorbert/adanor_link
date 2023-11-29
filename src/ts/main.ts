@@ -2,11 +2,11 @@ console.log("REDCAT LINK beta - Powered By REDCAT");
 const waitTime = 3000;
 
 const redirectSite = () => {
-    console.log(`Redirect to ${redirectURL}`);
-    window.location.href = redirectURL;
+    //console.log(`Redirect to ${redirect_url}`);
+    window.location.href = redirect_url;
 };
 
-if ((redirectURL !== "") && (redirectStatus === "redirect")) {
+if ((redirect_url !== "") && (redirect_status === "ready")) {
     setTimeout(() => {
         redirectSite();
         setInterval(() => {
