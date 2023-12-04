@@ -1,12 +1,14 @@
 <?php
 set_include_path( $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR );
 date_default_timezone_set('Europe/Budapest');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+header('Pragma: no-cache');
 
 $siteINFO = new stdClass();
 $siteJSON = loadJSON('json/site.json');
 $siteINFO -> langAvailable = $siteJSON["languages"];
-$siteINFO -> langUser = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : false;
-$siteINFO -> status = "";
+$siteINFO -> langUser = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : "?";
 
 // Test Server?
 if ($_SERVER['SERVER_NAME'] === 'localhost') {
@@ -42,7 +44,7 @@ $apiData = [];
 
 try {
     $pre = $siteINFO->test ? "http://localhost/redcat/api/" : "https://center.red-cat.hu/api/";
-    $apiData = loadJSON($pre."redcatLink?url=" . $siteINFO->page);
+    $apiData = loadJSON($pre."redcatLink?url=" . $siteINFO->page . "&lang=" . $siteINFO -> langUser . "&time=" . time());
 } catch (\Throwable $th) {
     $apiData["status"] = "error";
     $apiData["error"] = "error_api";
