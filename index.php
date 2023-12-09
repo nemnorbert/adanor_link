@@ -1,12 +1,8 @@
 <?php
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+header('Pragma: no-cache');
 require_once "php/functions.php";
 require_once "php/backend.php";
 require_once "php/main.php";
-
-
-/*
-echo '<pre>';
-var_dump($apiData);
-echo '<pre>';
-*/
 ?>

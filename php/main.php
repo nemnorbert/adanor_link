@@ -2,6 +2,7 @@
 if (isset($apiData["rapid"]) && $apiData["rapid"]) {
     header("HTTP/1.1 301 Moved Permanently");
     header('Location: ' . $apiData["redirect_to"]);
+    //var_dump($_SERVER['HTTP_ACCEPT_LANGUAGE']);
     exit();
 }
 ?>
