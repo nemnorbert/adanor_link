@@ -42,7 +42,7 @@ $browserLang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_A
 $apiData = [];
 
 try {
-    $pre = $siteINFO->test ? "http://localhost/redcat/api/" : "https://center.red-cat.hu/api/";
+    $pre = $siteINFO->test ? "http://localhost/redcat_api/" : "https://api.red-cat.hu/";
     $url = $pre."redcatLink?id=" . $siteINFO->page;
     $url .= $browserLang ? ("&lang=" . $browserLang) : "";
     $url .= "&time=" . time();
