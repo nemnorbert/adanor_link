@@ -1,5 +1,4 @@
 {   
-    "languages": ["en", "hu"],
     "mainPath": {
         "test": "/redcat_link/",
         "web": "/"

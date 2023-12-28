@@ -3,7 +3,6 @@ $minW: 200px;
 $colorPrimary: rgb(70, 206, 42);
 $colorSecundary: rgb(50, 156, 23);
 $loadingBGColors: #272727, #2273a1, #00245a, #1d1d1d;
-$colorRed: rgb(202, 0, 0);
 
 * {
     box-sizing: border-box;
@@ -20,14 +19,12 @@ body {
     animation: preLoaderBG 15s ease-in-out infinite;
     padding: 1em;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-image: linear-gradient(-45deg, $loadingBGColors);
+    row-gap: 2em;
 }
-.errors {
-  background-image: linear-gradient(-45deg, #000000, #ad3202, #a51f1f, #ff7575);
-}
-
 
 @keyframes preLoaderBG {
 	0%, 100% {
@@ -46,65 +43,37 @@ a {
 a:hover {
     opacity: .5;
 }
-.box {
-    width: clamp(100px, 80%, 400px);
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    color: whitesmoke;
-    text-align: center;
-}
 .logo {
-    height: auto;
-    img {
-        width: 100%;
-        height: auto;
-    }
-    .link {
-        text-transform: uppercase;
-        font-size: 1.7em;
-        font-weight: bold;
-    }
-}
-.status {
-    font-size: 15px;
-    text-align: center;
-    background-image: linear-gradient(160deg, $colorPrimary, $colorSecundary);
-    border-radius: 1em;
-    padding: 1em;
-    font-weight: bold;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    fill: white;
-    overflow-wrap: anywhere;
-
-    display: flex;
-    flex-direction: column;
-    gap: .7em;
-    
-    svg {
-      height: 4em;
-      animation: svgAni 3s ease-in-out infinite;
-    }
-    @keyframes svgAni {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(.8);
-      }
-    }
-
-    .title {
-      font-weight: bold;
+  height: auto;
+  width: clamp(250px, 80%, 550px);
+  img {
+      width: 100%;
+      height: auto;
+  }
+  .link {
       text-transform: uppercase;
-      font-size: 1.2em;
-    }
+      font-size: 1.7em;
+      font-weight: bold;
+      padding-left: 6px;
+  }
 }
-.error {
-    background-image: linear-gradient(160deg, rgb(238, 238, 238), rgb(206, 206, 206));
-    color: $colorRed;
-    fill: $colorRed;
+.box {
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 5px;
+  padding: 2em;
+  color: white;
+  fill: white;
+  background-color: hsla(0, 0%, 8%, .7);
+  text-align: center;
+
+  .title {
+    font-weight: bold;
+  }
+  svg {
+    width: 100px;
+  }
 }

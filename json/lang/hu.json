@@ -1,10 +1,3 @@
 {
-    "ready": "Biztonságos átirányítás",
-    "blocked": "Átirányítás letiltva!",
-
-    "error_api": "Kapcsolódási hiba (API)",
-    "error_404": "Nem található ilyen oldal",
-    "error_param": "Paraméter hiba",
-    "error_database": "Adatbázis hiba",
-    "error_general": "Általános hiba"
+    "ready": "Biztonságos átirányítás folyamatban"
 }

@@ -4,14 +4,12 @@ date_default_timezone_set('Europe/Budapest');
 
 $siteINFO = new stdClass();
 $siteJSON = loadJSON('json/site.json');
-$siteINFO -> langAvailable = $siteJSON["languages"];
 $siteINFO -> langUser = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : "?";
 
 // Test Server?
 if ($_SERVER['SERVER_NAME'] === 'localhost') {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
-
     $preURL = '/redcat_link';
     $siteINFO -> test = true;
     $siteINFO -> mainPath = $siteJSON["mainPath"]["test"];
@@ -19,7 +17,6 @@ if ($_SERVER['SERVER_NAME'] === 'localhost') {
 } else {
     error_reporting(0);
     ini_set('display_errors', '0');
-
     $preURL = '';
     $siteINFO -> test = false;
     $siteINFO -> mainPath = $siteJSON["mainPath"]["web"];
@@ -33,14 +30,12 @@ $parts = explode("?", $requestURI);
 $parts = explode("/", $parts[0]);
 
 $siteINFO->page = substr($parts[1], 0, 10);
-$siteINFO -> langSite = in_array($siteINFO -> langUser, $siteINFO -> langAvailable) ? $siteINFO -> langUser : "en";
+$siteINFO -> langSite = is_file('json/lang/'.$siteINFO -> langUser.'.json') ? $siteINFO -> langUser : "en";
 $langJSON = loadJSON('json/lang/'.$siteINFO -> langSite.'.json');
-
 $browserLang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : "";
 
 // Ready To Action
 $apiData = [];
-
 try {
     $pre = $siteINFO->test ? "http://localhost/redcat_api/" : "https://api.red-cat.hu/";
     $url = $pre."redcatLink?id=" . $siteINFO->page;
@@ -50,5 +45,15 @@ try {
 } catch (\Throwable $th) {
     $apiData["status"] = "error";
     $apiData["error"] = "error_api";
+    errorHandler("500", "api");
+}
+if (isset($apiData["error"])) {
+    if ($apiData["error"] === "error_404") {errorHandler("404", "");}
+    if ($apiData["error"] === "blocked") {errorHandler("901", "");}
+}
+if ($apiData["rapid"] ?? false) {
+    header("HTTP/1.1 303 See Other");
+    header('Location: ' . $apiData["redirect_to"]);
+    exit();
 }
 ?>
