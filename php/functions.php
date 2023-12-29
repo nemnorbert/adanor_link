@@ -1,7 +1,14 @@
 <?php
-function loadJSON($filePath) {
+function loadJSON($url) {
     try {
-        $json = file_get_contents($filePath);
+        $options = [
+            'http' => [
+                'method' => 'GET',
+                'header' => 'Content-Type: application/json',
+            ],
+        ];
+        $context = stream_context_create($options);
+        $json = file_get_contents($url, false, $context);
         if ($json === false) {
             throw new Exception('Error reading JSON file: ' . error_get_last()['message']);
         }
@@ -11,14 +18,15 @@ function loadJSON($filePath) {
         }
         return $data;
     } catch (Exception $e) {
-        errorHandler("json_error", $e->getMessage());
+        errorHandler("json_error", "json", $e->getMessage());
         return null;
     }
 }
-function errorHandler($code, $text) {
-    $link = $_SERVER['SERVER_NAME'] === 'localhost' ? "/redcat_home/" : "https://red-cat.hu/";
-    $link .= "error?id=" . $code;
-    if ($text !== "") {$link .= "&desc=".$text;}
+function errorHandler($code, $text, $details) {
+    $test = $_SERVER['SERVER_NAME'] === 'localhost';
+    $link = $test ? "http://localhost/redcat_home/error" : "https://red-cat.hu/error";
+    $link .= '?id='.$code ?? "400";
+    $link .= '&url='.urlencode($_SERVER['REQUEST_URI']) ?? "";
     header("HTTP/1.1 303 See Other");
     header("Location: ".$link);
     exit();

@@ -4,7 +4,6 @@ header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
 header('Pragma: no-cache');
 //$maintence = true;
 require_once "php/functions.php";
-if (isset($maintence) && $maintence) {errorHandler("503", "");}
+if (isset($maintence) && $maintence) {errorHandler("503", "", "");}
 require_once "php/backend.php";
-require_once "php/main.php";
 ?>
