@@ -1,6 +1,2 @@
-img/
-*.js
-*.css
-*.css.map
-*config.php
-log/
+/node_modules
+*config*
