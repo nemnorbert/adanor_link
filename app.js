@@ -8,13 +8,20 @@ const { errorHandler } = require('./utilities/errorHandler.js');
 app.get('/', (req, res, next) => {
     const link = `https://adanor.eu/link`;
     console.log(`Redirect To: ${link}`);
-    res.redirect(302, link);
+    //res.redirect(302, link);
+    res.json({
+        success: false,
+        status: '400',
+        message: 'Home Page',
+    });
 })
 
 app.get('/:id', async (req, res, next) => {
     try {
         // Validation
-        const schema = Joi.object({id: Joi.string().pattern(/^[a-zA-Z0-9]{8,12}$/).required(),});
+        const schema = Joi.object({
+            id: Joi.string().pattern(/^[\w\-]{12,15}$/).required(),
+        });
         await schema.validateAsync(req.params);
     } catch (error) {
         return errorHandler(400, error, next);
@@ -22,7 +29,9 @@ app.get('/:id', async (req, res, next) => {
 
     try {
         const id = req.params.id;
-        const response = await axios.get(`http://localhost:8080/links/${id}`);
+        const isProduction = process.env.NODE_ENV === 'production';
+        const baseURL = isProduction ? 'https://api.adanor.eu' : 'http://localhost:8080';
+        const response = await axios.get(`${baseURL}/links/${id}`);
         const data = response.data;
 
         if (data.blocked) {
