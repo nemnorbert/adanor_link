@@ -3,7 +3,7 @@ const app = express();
 const Joi = require('joi');
 const axios = require('axios');
 
-const { errorHandler } = require('./utilities/errorHandler.js');
+const errorHandler = require('./utilities/errorHandler.js');
 
 app.get('/', (req, res, next) => {
     const link = `https://adanor.eu/link`;
@@ -24,7 +24,7 @@ app.get('/:id', async (req, res, next) => {
         });
         await schema.validateAsync(req.params);
     } catch (error) {
-        return errorHandler(400, error, next);
+        return errorHandler(400, error, res);
     }
 
     try {
@@ -35,7 +35,7 @@ app.get('/:id', async (req, res, next) => {
         const data = response.data;
 
         if (data.blocked) {
-            return errorHandler(410, 'Link is Blocked', next);
+            return errorHandler(410, 'Link is Blocked', res);
         }
         if (data.success) {
             console.log(`Redirect To: ${data.link}`);
@@ -44,18 +44,8 @@ app.get('/:id', async (req, res, next) => {
     } catch (error) {
         const status = error.response.status || 500;
         const message = error.response.data.message || 'API Connection Error';
-        return errorHandler(status, message, next);
+        return errorHandler(status, message, res);
     }
 })
-
-// Error handling middleware
-app.use(async (error, req, res, next) => {
-    res.status(error.status || 500);
-    await res.json({
-        success: false,
-        status: error.status,
-        message: error.message,
-    });
-});
 
 module.exports = app;
